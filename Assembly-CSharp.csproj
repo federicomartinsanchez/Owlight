@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\OwlController.cs" />
      <Compile Include="Assets\Scripts\UIManager.cs" />
      <Compile Include="Assets\Scripts\WizardController.cs" />
+     <None Include="Assets\Fantasy-Environment\Materials\StandardDoubleSided.shader" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>E:/Unity Projects/Owlight/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
@@ -236,6 +237,9 @@
  </Reference>
  <Reference Include="Unity.Locator">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2018.1.1f1/Editor/Data/Managed/Unity.Locator.dll</HintPath>
+ </Reference>
+ <Reference Include="Assembly-CSharp-firstpass">
+ <HintPath>E:/Unity Projects/Owlight/Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2018.1.1f1/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
