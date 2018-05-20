@@ -6,26 +6,47 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour {
 
-	public NavMeshAgent agent;
-	public Transform Wizard;
+	public NavMeshAgent agent; 
 
-	void Update () {
+	private Transform Wizard;
+
+    private void Start()
+    {
+        Wizard = WizardController.Instance.transform;
+    }
+
+    void Update ()
+    {
 		agent.SetDestination(Wizard.position);
-        if (Vector3.Distance(this.transform.position, Wizard.transform.position) > 10f)
-        {
-            //this.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        }
 	}
-	
-	private void OnCollisionEnter(Collision other) {
-		if (other.gameObject.name == "Wizard" )
-		{
-			int wizardHealth = WizardController.Instance.takeDamage(1);
-			UIManager.Instance.modifyLifeText(wizardHealth.ToString());
 
-		}
-	}
-	private void Attack(){
+    //-- Ataque de los enemigos --
+	private void Attack()
+    {
 		
 	}
+
+    //-- Colisión de los enemigos --
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Wizard")
+        {
+            int wizardHealth = WizardController.Instance.takeDamage(1);
+        }
+    }
+
+    //-- Instaciación de un Enemigo --
+    public void InstantiateEnemy(Vector3 spawnPoint)
+    {
+        //Instanciación de objeto
+        GameObject wave = Instantiate(this.gameObject, spawnPoint, Quaternion.identity);
+    }
+
+    //-- Muerte de los Goblins --
+    public void Die()
+    {
+        UIManager.Instance.ActualiceScore();
+        Destroy(this.gameObject);
+    }
+
 }

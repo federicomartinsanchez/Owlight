@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FireBallController : MonoBehaviour
 {
+    public GameObject Explosion;
 
     private float dieInSeconds = 5f; //Delay de destrucción de la bala si no colisiona con nada
 
@@ -13,9 +14,10 @@ public class FireBallController : MonoBehaviour
         //Instanciación de objeto
         GameObject fireball = Instantiate(this.gameObject, origin.transform.position, Quaternion.identity);
         //El proyectil también se rota hacia esa posición
+        destiny.y = origin.transform.position.y;
         fireball.transform.LookAt(destiny);
         //Se aplica la fuerza de desplazamiento
-        fireball.GetComponent<Rigidbody>().AddForce(origin.transform.forward * 1000f);
+        fireball.GetComponent<Rigidbody>().AddForce(fireball.transform.forward * 1000f);
         //Se destruye el objeto a los 5 segundos
         Die(fireball, dieInSeconds);
     }
@@ -23,8 +25,6 @@ public class FireBallController : MonoBehaviour
     //-- Destrucción de la FireBall --
     private void Die(GameObject fireball, float dieInSeconds)
     {
-        //Metodo preparado por si se quiere meter una explosión o algo
-
         //Destrucción de la FireBall
         Destroy(fireball, dieInSeconds);
     }
@@ -32,8 +32,19 @@ public class FireBallController : MonoBehaviour
     //-- Colisiones con la FireBall como trigger --
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.tag == "Enemy" || collision.tag == "Wall")
+        if (collision.gameObject.tag != "Wizard")
+        {
+            //Metodo preparado por si se quiere meter una explosión o algo
+            Explosion.GetComponent<Explosion>().InstantiateExplosion(this.transform.position, collision.transform.position);
+
+            if (collision.tag == "Enemy")
+            {
+                collision.GetComponent<EnemyController>().Die();
+            }
+
             Die(this.gameObject, 0f);
+        }
+
     }
 
 }

@@ -27,15 +27,12 @@ public class ForceWaveController : MonoBehaviour
     {
         if (collision.tag == "Enemy")
         {
-            //collision.transform.InverseTransformDirection(collision.transform.position - transform.position);
-            /*Vector3 repulsionVector = new Vector3(
-                                                    (collision.transform.position.x - this.transform.position.x)*3f,
-                                                    0f,
-                                                    (collision.transform.position.z + this.transform.position.z)*3f);
-            collision.transform.position = collision.transform.InverseTransformDirection(repulsionVector);*/
+            /*
             Vector3 repulsionVector = collision.transform.position;
             repulsionVector = repulsionVector.normalized;
             collision.GetComponent<Rigidbody>().AddForce(repulsionVector * 650f);
+            */
+            collision.GetComponent<EnemyController>().Die();
         }
     }
 }

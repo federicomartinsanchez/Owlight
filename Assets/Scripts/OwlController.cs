@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class OwlController : MonoBehaviour {  public float moveTime = 1.0f;
     float owlAltittude = 5.0f;
+    private Transform owlProjection;
     Camera cam;
 
     void Start () {
         cam = Camera.main;
-		transform.position = new Vector3 (transform.position.x, owlAltittude,transform.position.x );
+		//transform.position = new Vector3 (transform.position.x, owlAltittude,transform.position.x );
+        owlProjection = transform.GetChild(0).transform;
     }
     
     void Update () {
         MovePosToPointer();
 		CallWizardToMove();
+        //transform.forward = 
 	}
 
     void MovePosToPointer() {
@@ -25,13 +28,22 @@ public class OwlController : MonoBehaviour {  public float moveTime = 1.0f;
 			if (hit.transform.tag == "flyingplane"){
             StartCoroutine(LerpPosition(hit.point, moveTime));
 			}
+            Vector3 vectorA = transform.position - hit.point;
+            if(vectorA.magnitude > 0.1f)
+                transform.LookAt(hit.point);
         }
     }
 	public void CallWizardToMove()
 	{
-		if (Input.GetMouseButton(0))
+
+
+		if (Input.GetMouseButtonDown(0))
 		{
-			WizardController.Instance.MoveTo(transform.position);
+			WizardController.Instance.MoveTo(owlProjection.transform.position);
+		}
+        if (Input.GetMouseButtonDown(1))
+		{
+			WizardController.Instance.TriggerAttackAnimation(transform.position);
 		}
 	}
     private IEnumerator LerpPosition(Vector3 newPos, float time){
